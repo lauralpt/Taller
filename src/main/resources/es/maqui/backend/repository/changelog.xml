@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+			http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+	<changeSet author="usuario (generated)" id="1400847488681-1">
+
+		<!-- Tabla Averia -->
+		<createTable catalogName="maqui" tableName="AVERIA">
+			<column autoIncrement="true" name="pkidAveria" type="INT(10)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="nombre" type="VARCHAR(80)" />
+			<column name="descripcion" type="VARCHAR(80)" />
+		</createTable>
+
+		<!-- Tabla Tipo Vehiculo -->
+		<createTable catalogName="maqui" tableName="TIPO_VEHICULO">
+			<column autoIncrement="true" name="pkidTipoVehiculo" type="INT(10)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="tipo" type="VARCHAR(80)" />
+			<column name="descripcion" type="VARCHAR(80)" />
+		</createTable>
+
+		<!-- Tabla Marca -->
+		<createTable catalogName="maqui" tableName="MARCA">
+			<column autoIncrement="true" name="pkidMarca" type="INT(10)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="nombre" type="VARCHAR(80)" />
+		</createTable>
+
+		<!-- Tabla Vehiculo -->
+		<createTable catalogName="maqui" tableName="VEHICULO">
+			<column autoIncrement="true" name="pkidVehiculo" type="INT(10)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="nombre" type="VARCHAR(80)" />
+			<column name="matricula" type="VARCHAR(80)" />
+			<column name="fkidTipoVehiculo" type="INT(10)" />
+			<column name="fkidMarca" type="INT(10)" />
+		</createTable>
+
+		<!-- Tabla RegistroAverias -->
+
+		<createTable catalogName="maqui" tableName="REGISTRO_AVERIAS">
+			<column autoIncrement="true" name="pkidRegistroAverias" type="INT(10)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="fecha" type="VARCHAR(80)" />
+			<column name="fkidAveria" type="INT(10)" />
+		</createTable>
+
+		<!-- Tabla VehiculosTienenAverias -->
+
+		<createTable catalogName="maqui" tableName="VEHICULOS_TIENEN_AVERIAS">
+			<column autoIncrement="true" name="pkidVehiculosTienenAverias"
+				type="INT(10)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="fkidVehiculosRegistroAverias" type="INT(10)" />
+			<column name="fkidRegistroAveriasVehiculos" type="INT(10)" />
+		</createTable>
+
+		<addForeignKeyConstraint constraintName="fk_MARCA_VEHICULO"
+			referencedTableName="MARCA" baseColumnNames="fkidMarca"
+			baseTableName="VEHICULO" referencedColumnNames="pkidMarca" />
+
+		<addForeignKeyConstraint constraintName="fk_TIPOVEHICULO_VEHICULO"
+			referencedTableName="TIPO_VEHICULO" baseColumnNames="fkidTipoVehiculo"
+			baseTableName="VEHICULO" referencedColumnNames="pkidTipoVehiculo" />
+
+		<addForeignKeyConstraint constraintName="fk_AVERIA_REGISTROAVERIAS"
+			referencedTableName="AVERIA" baseColumnNames="fkidAveria"
+			baseTableName="REGISTRO_AVERIAS" referencedColumnNames="pkidAveria" />
+
+		<addForeignKeyConstraint constraintName="fk_VEHICULO_VEHICULOSTIENENAVERIAS"
+			referencedTableName="VEHICULO" baseColumnNames="fkidVehiculosRegistroAverias"
+			baseTableName="VEHICULOS_TIENEN_AVERIAS" referencedColumnNames="pkidVehiculo" />
+
+		<addForeignKeyConstraint constraintName="fk_REGISTROAVERIAS_VEHICULOSTIENENAVERIAS"
+			referencedTableName="REGISTRO_AVERIAS" baseColumnNames="fkidRegistroAveriasVehiculos"
+			baseTableName="VEHICULOS_TIENEN_AVERIAS" referencedColumnNames="pkidRegistroAverias" />
+
+	</changeSet>
+
+</databaseChangeLog>
